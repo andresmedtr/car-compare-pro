@@ -20,29 +20,6 @@ export const Footer = () => (
             </div>
             {/* Grid column */}
 
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Products</a>
-              </h6>
-            </div>
-            {/* Grid column */}
-
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Awards</a>
-              </h6>
-            </div>
-            {/* Grid column */}
-
-            {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">Help</a>
-              </h6>
-            </div>
-            {/* Grid column */}
 
             {/* Grid column */}
             <div className="col-md-2">
@@ -63,9 +40,8 @@ export const Footer = () => (
           <div className="row d-flex justify-content-center">
             <div className="col-lg-8">
               <p>
-                This is a project developed with time and dedication by a team of students from 4Geeks Academy!
-                We put plenty of time and effort into building this project and we are proud to present you with
-                CarFinder!
+                 
+Crafted with care by 4Geeks Academy's dedicated students, CarComparePro showcases our prowess and diligence. A fusion of innovation and hard work, this is your premier solution, exemplifying our unwavering commitment to excellence.
               </p>
             </div>
           </div>
