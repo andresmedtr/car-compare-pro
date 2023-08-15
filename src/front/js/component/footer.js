@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 export const Footer = () => (
@@ -13,11 +14,14 @@ export const Footer = () => (
           {/* Grid row */}
           <div className="row text-center d-flex justify-content-center pt-5">
             {/* Grid column */}
-            <div className="col-md-2">
-              <h6 className="text-uppercase font-weight-bold">
-                <a href="#!" className="text-white">About us</a>
-              </h6>
-            </div>
+              <div className="col-md-2">
+              <Link to="/aboutus">
+                <h6 className="text-uppercase font-weight-bold">                  
+                  <a href="#!" className="text-white">About us</a>
+                </h6>
+                </Link>
+              </div>
+            
             {/* Grid column */}
 
 
@@ -72,8 +76,8 @@ Crafted with care by 4Geeks Academy's dedicated students, CarComparePro showcase
         {/* Section: Social */}
       </div>
       {/* Grid container */}
-     
-  
+
+
       {/* Copyright */}
     </footer>
     {/* Footer */}
