@@ -9,8 +9,8 @@ export const Home = () => {
 
 	return (
 		<div className="text-center">
-		
-	
+
+
 		<div className="home-container">
 			<div className="background">
 			</div>
@@ -18,9 +18,9 @@ export const Home = () => {
 			<h1 style={{fontSize:48,zIndex:"1000"}} >Vehicles that drive the world</h1>
 				<p className="fs-5 py-2 ps-1">Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.</p>
 			</section>
-			<AboutPage />
+			
 		</div>
-		
+
 		</div>	);
-		
+
 };
