@@ -1,5 +1,5 @@
 import React from 'react';
-import { Footer } from './footer';
+
 
 
 const AboutPage = () => {
@@ -10,15 +10,12 @@ const AboutPage = () => {
         <div className="container py-5">
           <div className="row h-100 align-items-center py-5">
             <div className="col-lg-6">
-              <h1 className="display-4">About us page</h1>
+              <h2 className="display-4">About Us</h2>
               <p className="lead text-muted mb-0">
                 Find and compare cars you like! It makes it easier to purchase your next car with ease.
               </p>
               <p className="lead text-muted">
-                Snippet by{' '}
-                <a href="https://bootstrapious.com/snippets" className="text-muted">
-                  <u>CarfindersUSA</u>
-                </a>
+             
               </p>
             </div>
             <div className="col-lg-6 d-none d-lg-block">
@@ -245,7 +242,7 @@ const AboutPage = () => {
           </p>
         </div>
       </footer> */}
-      <Footer></Footer>
+      
     </div>
 
   );

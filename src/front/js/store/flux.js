@@ -20,6 +20,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       reviews: [],
       carReviews: [],
       token: null,
+      tokenTimeStamp: null,
       filters: [
         {
           brand: "",
@@ -49,7 +50,6 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
-            console.log("These are stored cars in database:", data);
           });
       },
       applyFilters: (filterArray) => {
@@ -94,23 +94,14 @@ const getState = ({ getStore, getActions, setStore }) => {
             const data = await response.json();
 
             // Save the authentication token to the store
-            setStore({ token: data.token });
+            setStore({ token: data.token, tokenTimeStamp: Date.now() });
             console.log(data.token);
 
             // Save the token to localStorage for persistent access
             localStorage.setItem("token", data.token);
 
             // Reset the error message (if any) after successful login
-            setStore({ errorMessage: null });
-
-            const tokenExpTime = 60*60*1000;
-            setTimeout(() => {
-              setStore({token : null});
-              localStorage.removeItem("token");
-              alert("Session Expired due to inactivity");
-            }, tokenExpTime);
-            // Redirect to the desired page or perform any necessary action
-            // Example: history.push("/dashboard");
+            setStore({ errorMessage: null });            
           } else {
             // Login failed
             throw new Error("Invalid email or password");
@@ -120,6 +111,12 @@ const getState = ({ getStore, getActions, setStore }) => {
           throw error;
         }
       },
+
+      isTokenExpired: (tokenTimestamp, expirationDuration) => {
+        const currentTime = Date.now();
+        return currentTime - tokenTimestamp > expirationDuration;
+      },
+
       addCarToCompare: (car) => {
         let compareCars = getStore().compareCars;
         compareCars.push(car);
@@ -166,6 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteSaved: (carId) => {
         let store = getStore();
         let token = localStorage.getItem("token");
+      
         fetch(`${process.env.BACKEND_URL}/delete_saved`, {
           method: "DELETE",
           headers: {
@@ -180,13 +178,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           .then((data) => {
             if (data.Message === "Car successfully removed from saved list") {
               const updatedSaved = store.saved.filter((savedCar) => savedCar.car.id !== carId);
-              setStore({ ...store.saved, saved: updatedSaved });
+              setStore({ ...store, saved: updatedSaved });
               console.log("Saved cars by users: ", updatedSaved);
             } else {
               console.log("Error deleting saved car:", data.Message);
-          }})
+            }
+          })
           .catch((error) => console.log(error));
       },
+      
 
       retrieveData: () => {
         let store = getStore();
@@ -200,9 +200,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }})
           .then((res) => res.json())
           .then((data) => {
-            console.log("Response from PRIVATE GET: ",data);
             setStore({saved : data.saved});
-            console.log("SAVED FOR CURRENT USER", store.saved)
           })
           .catch((error) => console.log(error));
           getActions().getAllCars();
