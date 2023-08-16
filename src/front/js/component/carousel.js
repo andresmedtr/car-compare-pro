@@ -1,5 +1,6 @@
 import React from 'react';
 import "../../styles/carousel.css"; // Make sure to adjust the path to your CSS file
+import { Link } from 'react-router-dom';
 
 
 
@@ -27,7 +28,10 @@ const Carousel = () => {
               <div className="carousel-caption text-start">
                 <h1>Example headline.</h1>
                 <p>Some representative placeholder content for the first slide of the carousel.</p>
-                <p><a className="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+                <p>
+                <Link to="/aboutus">
+                <a className="btn btn-lg btn-primary" href="#">Sign up today</a>
+            </Link></p>
               </div>
             </div>
           </div>
