@@ -37,10 +37,6 @@ body {
     height: 32rem;
   }
 
-  .container {
-    background-color: white;
-
-  }
   .container row {
       flex-shrink: 0;
       width: 100%;
