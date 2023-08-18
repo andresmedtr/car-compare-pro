@@ -31,8 +31,7 @@ const UserPage = () => {
     };
 
     fetchUserData();
-    actions.retrieveData();
-  }, [store.token]);
+  }, [store.saved]);
 
   if (loading) {
     return <p className="login-title">Loading user data...</p>;
@@ -51,7 +50,7 @@ const UserPage = () => {
             Phone Number: <span className="data-value">{user.phone_number}</span>
           </p>
           <p className="data-label">
-            Number Of Favorites: <span className="data-value">{store.saved.length}</span>
+            Number of Favorites: <span className="data-value">{savedCars.length}</span>
           </p>
         </div>
         <div>
