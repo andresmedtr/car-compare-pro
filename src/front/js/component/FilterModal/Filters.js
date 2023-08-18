@@ -115,7 +115,7 @@ const handleApplyFilters = () => {
                   Cars under:
                 </div>
                 <div className='d-flex justify-content-center'>
-                  <input onChange={handleRange} type="range" min="22500" max="100000" value={rangeValue} step="100"/>
+                  <input onChange={handleRange} type="range" min="22500" max="100000" value={rangeValue} step="500"/>
                 </div>
                 <div className='d-flex justify-content-center'>
                   <input onChange={handleRange} value={rangeValue}/>
