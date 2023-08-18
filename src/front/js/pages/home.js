@@ -2,6 +2,9 @@ import React, { useContext, useRef, useEffect } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import AboutPage from "../component/aboutPage";
+import Carousel from "../component/carousel";
+import { Footer } from "../component/footer";
+
 import car_video from "../../../assets/carvideo.mov"
 
 export const Home = () => {
@@ -20,9 +23,9 @@ export const Home = () => {
 			<h1 style={{fontSize:48,zIndex:"1000"}} >Vehicles that drive the world</h1>
 				<p className="fs-5 py-2 ps-1">Empowering Your Car Choices through Comprehensive Comparisons.</p>
 			</section>
-			
+			<Carousel />
+			<Footer />			
 		</div>
-
 		</div>	);
-		
+
 };
