@@ -1,7 +1,7 @@
 {
 	"name": "react-hello-webapp",
 	"engines": {
-		"node": "16.x"
+		"node": "20.x"
 	},
 	"version": "1.0.1",
 	"description": "",
@@ -11,8 +11,8 @@
 		"build": "webpack --config webpack.prod.js"
 	},
 	"author": {
-		"name": "Alejandro Sanchez",
-		"url": "http://alesanchezr.com/"
+		"name": "Andres Medina",
+		"url": "https://www.linkedin.com/in/andres-med/"
 	},
 	"contributors": [
 		{
