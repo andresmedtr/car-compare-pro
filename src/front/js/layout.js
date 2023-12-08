@@ -4,7 +4,7 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import Login from "./pages/Login";
-import AboutCar from "./pages/aboutcar";
+import AboutCar from "./pages/aboutcar"
 import CarViews from "./pages/carviews";
 import CreateAccount from "./pages/create-account";
 import UserPage from "./pages/userpage";
