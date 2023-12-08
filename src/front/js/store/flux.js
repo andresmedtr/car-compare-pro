@@ -39,14 +39,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getAllUsers: () => {
-        fetch(`${process.env.BACKEND_URL}/api/users`)
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/users`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ users: data });
           });
       },
       getAllCars: () => {
-        fetch(`${process.env.BACKEND_URL}/api/cars`)
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/cars`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       singleCar: async (id) => {
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/cars/${id}`,
+            `https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/cars/${id}`,
             {
               method: "GET",
               redirect: "follow",
@@ -81,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login: async (email, password) => {
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
+          const response = await fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -137,7 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       saveFavorites: (car) => {
         let store = getStore();
         let token = localStorage.getItem("token");
-        fetch(`${process.env.BACKEND_URL}/api/add_saved`, {
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/add_saved`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -164,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         let store = getStore();
         let token = localStorage.getItem("token");
       
-        fetch(`${process.env.BACKEND_URL}/api/delete_saved`, {
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/delete_saved`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -192,7 +192,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         let store = getStore();
         let token = localStorage.getItem("token");
         if (token) {
-        fetch(`${process.env.BACKEND_URL}/api/private`, {
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/private`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -217,7 +217,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       createReview: async (rating, review_text, car_id) => {
         const token = localStorage.getItem("token")
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/api/add_review`, {
+          const response = await fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/api/add_review`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -240,7 +240,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getReviews: () => {
-        fetch(`${process.env.BACKEND_URL}/reviews`)
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/reviews`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ reviews: data });
@@ -249,7 +249,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCarReviews: (car_id) => {
-        fetch(`${process.env.BACKEND_URL}/reviews/${car_id}`)
+        fetch(`https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev/reviews/${car_id}`)
         .then((res) => res.json())
         .then((data) => {
 
