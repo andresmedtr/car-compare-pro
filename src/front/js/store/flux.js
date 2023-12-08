@@ -39,14 +39,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getAllUsers: () => {
-        fetch(`${process.env.BACKEND_URL}/users`)
+        fetch(`${process.env.BACKEND_URL}/api/users`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ users: data });
           });
       },
       getAllCars: () => {
-        fetch(`${process.env.BACKEND_URL}/cars`)
+        fetch(`${process.env.BACKEND_URL}/api/cars`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
@@ -59,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       singleCar: async (id) => {
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/cars/${id}`,
+            `${process.env.BACKEND_URL}/api/cars/${id}`,
             {
               method: "GET",
               redirect: "follow",
@@ -101,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             localStorage.setItem("token", data.token);
 
             // Reset the error message (if any) after successful login
-            setStore({ errorMessage: null });            
+            setStore({ errorMessage: null });
           } else {
             // Login failed
             throw new Error("Invalid email or password");
@@ -154,8 +154,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               return alert("Car is already saved")
             else
               store.saved.push(car);
-              setStore(store);
-              console.log("saved cars by users: ", store.saved)
+            setStore(store);
+            console.log("saved cars by users: ", store.saved)
           })
           .catch((error) => console.log(error));
       },
@@ -163,7 +163,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteSaved: (carId) => {
         let store = getStore();
         let token = localStorage.getItem("token");
-      
+
         fetch(`${process.env.BACKEND_URL}/delete_saved`, {
           method: "DELETE",
           headers: {
@@ -186,56 +186,57 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log(error));
       },
-      
+
 
       retrieveData: () => {
         let store = getStore();
         let token = localStorage.getItem("token");
         if (token) {
-        fetch(`${process.env.BACKEND_URL}/private`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          }})
-          .then((res) => res.json())
-          .then((data) => {
-            setStore({saved : data.saved});
+          fetch(`${process.env.BACKEND_URL}/api/private`, {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            }
           })
-          .catch((error) => console.log(error));
+            .then((res) => res.json())
+            .then((data) => {
+              setStore({ saved: data.saved });
+            })
+            .catch((error) => console.log(error));
           getActions().getAllCars();
           getActions().getAllUsers();
         } else null
       },
       setLoggedIn: () => {
-        setStore({isLogged: true})
+        setStore({ isLogged: true })
       },
       setLoggedOut: () => {
-        setStore({isLogged: false})
+        setStore({ isLogged: false })
       },
 
       createReview: async (rating, review_text, car_id) => {
         const token = localStorage.getItem("token")
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            rating: rating,
-            review_text: review_text,
-            car_id: car_id
-          })
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              rating: rating,
+              review_text: review_text,
+              car_id: car_id
+            })
+          }
+          )
+          const data = await response.json()
+          if (!response.ok) throw new Error(data.message || "Error creating review")
+        } catch (error) {
+          console.log("Error", error.message)
         }
-        )
-        const data = await response.json()
-        if (!response.ok) throw new Error(data.message || "Error creating review")
-      } catch(error) {
-        console.log("Error", error.message)
-    }
-       
+
 
       },
 
@@ -250,15 +251,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getCarReviews: (car_id) => {
         fetch(`${process.env.BACKEND_URL}/reviews/${car_id}`)
-        .then((res) => res.json())
-        .then((data) => {
+          .then((res) => res.json())
+          .then((data) => {
 
-          setStore({carReviews: data})
+            setStore({ carReviews: data })
 
-        })
-        .catch((error) => {
-          console.error("Error fetching reviews:", error.message);
-        });
+          })
+          .catch((error) => {
+            console.error("Error fetching reviews:", error.message);
+          });
       }
     }
   };

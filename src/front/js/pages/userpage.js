@@ -31,6 +31,7 @@ const UserPage = () => {
     };
 
     fetchUserData();
+
   }, [store.saved]);
 
   if (loading) {
@@ -38,7 +39,7 @@ const UserPage = () => {
   }
 
   if (user) {
-    const savedCars = user.saved.map(savedCar => savedCar.car);
+    const savedCars = user.saved ? user.saved.map(savedCar => savedCar.car) : "No cars to display";
     return (
       <div>
         <div className="user-container">
@@ -56,7 +57,7 @@ const UserPage = () => {
         <div>
           <div className="favorite-cars">
             <center><h3>Saved Favorite Cars</h3></center>
-            <CarCards cars={savedCars} />
+            <CarCards cars={store.cars} />
           </div>
           {/* Render other user data here */}
         </div>
