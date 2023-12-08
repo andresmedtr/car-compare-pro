@@ -1,5 +1,4 @@
 const getState = ({ getStore, getActions, setStore }) => {
-  const BACKEND_URL="https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev"
   return {
     store: {
       message: null,
@@ -40,14 +39,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getAllUsers: () => {
-        fetch(`${BACKEND_URL}/api/users`)
+        fetch(`${process.env.BACKEND_URL}/api/users`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ users: data });
           });
       },
       getAllCars: () => {
-        fetch(`${BACKEND_URL}/api/cars`)
+        fetch(`${process.env.BACKEND_URL}/api/cars`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
@@ -60,7 +59,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       singleCar: async (id) => {
         try {
           const response = await fetch(
-            `${BACKEND_URL}/api/cars/${id}`,
+            `${process.env.BACKEND_URL}/api/cars/${id}`,
             {
               method: "GET",
               redirect: "follow",
@@ -82,7 +81,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login: async (email, password) => {
         try {
-          const response = await fetch(`${BACKEND_URL}/login`, {
+          const response = await fetch(`${process.env.BACKEND_URL}/api/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -102,7 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             localStorage.setItem("token", data.token);
 
             // Reset the error message (if any) after successful login
-            setStore({ errorMessage: null });
+            setStore({ errorMessage: null });            
           } else {
             // Login failed
             throw new Error("Invalid email or password");
@@ -138,7 +137,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       saveFavorites: (car) => {
         let store = getStore();
         let token = localStorage.getItem("token");
-        fetch(`${BACKEND_URL}/add_saved`, {
+        fetch(`${process.env.BACKEND_URL}/api/add_saved`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -155,8 +154,8 @@ const getState = ({ getStore, getActions, setStore }) => {
               return alert("Car is already saved")
             else
               store.saved.push(car);
-            setStore(store);
-            console.log("saved cars by users: ", store.saved)
+              setStore(store);
+              console.log("saved cars by users: ", store.saved)
           })
           .catch((error) => console.log(error));
       },
@@ -164,8 +163,8 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteSaved: (carId) => {
         let store = getStore();
         let token = localStorage.getItem("token");
-
-        fetch(`${BACKEND_URL}/delete_saved`, {
+      
+        fetch(`${process.env.BACKEND_URL}/api/delete_saved`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -187,62 +186,61 @@ const getState = ({ getStore, getActions, setStore }) => {
           })
           .catch((error) => console.log(error));
       },
-
+      
 
       retrieveData: () => {
         let store = getStore();
         let token = localStorage.getItem("token");
         if (token) {
-          fetch(`${BACKEND_URL}/api/private`, {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            }
+        fetch(`${process.env.BACKEND_URL}/api/private`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          }})
+          .then((res) => res.json())
+          .then((data) => {
+            setStore({saved : data.saved});
           })
-            .then((res) => res.json())
-            .then((data) => {
-              setStore({ saved: data.saved });
-            })
-            .catch((error) => console.log(error));
+          .catch((error) => console.log(error));
           getActions().getAllCars();
           getActions().getAllUsers();
         } else null
       },
       setLoggedIn: () => {
-        setStore({ isLogged: true })
+        setStore({isLogged: true})
       },
       setLoggedOut: () => {
-        setStore({ isLogged: false })
+        setStore({isLogged: false})
       },
 
       createReview: async (rating, review_text, car_id) => {
         const token = localStorage.getItem("token")
         try {
-          const response = await fetch(`${BACKEND_URL}/add_review`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({
-              rating: rating,
-              review_text: review_text,
-              car_id: car_id
-            })
-          }
-          )
-          const data = await response.json()
-          if (!response.ok) throw new Error(data.message || "Error creating review")
-        } catch (error) {
-          console.log("Error", error.message)
+          const response = await fetch(`${process.env.BACKEND_URL}/api/add_review`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            rating: rating,
+            review_text: review_text,
+            car_id: car_id
+          })
         }
-
+        )
+        const data = await response.json()
+        if (!response.ok) throw new Error(data.message || "Error creating review")
+      } catch(error) {
+        console.log("Error", error.message)
+    }
+       
 
       },
 
       getReviews: () => {
-        fetch(`${BACKEND_URL}/reviews`)
+        fetch(`${process.env.BACKEND_URL}/reviews`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ reviews: data });
@@ -251,16 +249,16 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCarReviews: (car_id) => {
-        fetch(`${BACKEND_URL}/reviews/${car_id}`)
-          .then((res) => res.json())
-          .then((data) => {
+        fetch(`${process.env.BACKEND_URL}/reviews/${car_id}`)
+        .then((res) => res.json())
+        .then((data) => {
 
-            setStore({ carReviews: data })
+          setStore({carReviews: data})
 
-          })
-          .catch((error) => {
-            console.error("Error fetching reviews:", error.message);
-          });
+        })
+        .catch((error) => {
+          console.error("Error fetching reviews:", error.message);
+        });
       }
     }
   };
