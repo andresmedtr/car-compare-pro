@@ -1,4 +1,5 @@
 const getState = ({ getStore, getActions, setStore }) => {
+  const BACKEND_URL="https://humble-zebra-w6jqv4rrj76fg9wr-3001.app.github.dev"
   return {
     store: {
       message: null,
@@ -39,14 +40,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
     actions: {
       getAllUsers: () => {
-        fetch(`${process.env.BACKEND_URL}/api/users`)
+        fetch(`${BACKEND_URL}/api/users`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ users: data });
           });
       },
       getAllCars: () => {
-        fetch(`${process.env.BACKEND_URL}/api/cars`)
+        fetch(`${BACKEND_URL}/api/cars`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ cars: data });
@@ -59,7 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       singleCar: async (id) => {
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/cars/${id}`,
+            `${BACKEND_URL}/api/cars/${id}`,
             {
               method: "GET",
               redirect: "follow",
@@ -81,7 +82,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
       login: async (email, password) => {
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/login`, {
+          const response = await fetch(`${BACKEND_URL}/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -137,7 +138,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       saveFavorites: (car) => {
         let store = getStore();
         let token = localStorage.getItem("token");
-        fetch(`${process.env.BACKEND_URL}/add_saved`, {
+        fetch(`${BACKEND_URL}/add_saved`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -164,7 +165,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         let store = getStore();
         let token = localStorage.getItem("token");
 
-        fetch(`${process.env.BACKEND_URL}/delete_saved`, {
+        fetch(`${BACKEND_URL}/delete_saved`, {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
@@ -192,7 +193,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         let store = getStore();
         let token = localStorage.getItem("token");
         if (token) {
-          fetch(`${process.env.BACKEND_URL}/api/private`, {
+          fetch(`${BACKEND_URL}/api/private`, {
             method: "GET",
             headers: {
               "Content-Type": "application/json",
@@ -218,7 +219,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       createReview: async (rating, review_text, car_id) => {
         const token = localStorage.getItem("token")
         try {
-          const response = await fetch(`${process.env.BACKEND_URL}/add_review`, {
+          const response = await fetch(`${BACKEND_URL}/add_review`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -241,7 +242,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getReviews: () => {
-        fetch(`${process.env.BACKEND_URL}/reviews`)
+        fetch(`${BACKEND_URL}/reviews`)
           .then((res) => res.json())
           .then((data) => {
             setStore({ reviews: data });
@@ -250,7 +251,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       getCarReviews: (car_id) => {
-        fetch(`${process.env.BACKEND_URL}/reviews/${car_id}`)
+        fetch(`${BACKEND_URL}/reviews/${car_id}`)
           .then((res) => res.json())
           .then((data) => {
 
